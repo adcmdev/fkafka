@@ -26,7 +26,7 @@ class Kafka {
     );
   }
 
-  /// Unsubscribe from topic [topic]
+  /// Unsubscribe from topic [topic] listener
   void unSubcribe() {
     _listeners = _listeners.where((k) => k.uuid != _uuid).toList();
   }
