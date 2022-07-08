@@ -2,16 +2,20 @@ library flutter_kafka;
 
 import 'package:uuid/uuid.dart';
 
-typedef OnTopicCallBack = void Function(Map<String, dynamic> data);
+part 'package:flutter_kafka/models/subscriber.dart';
+part 'package:flutter_kafka/models/producer.dart';
+part 'package:flutter_kafka/models/topic.dart';
+
+typedef OnTopicCallBack = void Function(TopicData topic);
 
 class Kafka {
   static List<KafkaSubscriber> _listeners = [];
   final _uuid = const Uuid().v1();
 
   /// Emit [topic] to all listeners
-  void emit(String topic, [Map<String, dynamic> data = const {}]) {
+  void emit(String topic, [TopicData topicData = const TopicData()]) {
     _listeners.where((k) => k.topic == topic).forEach((k) {
-      k.onTopic(data);
+      k.onTopic(topicData);
     });
   }
 
@@ -30,16 +34,4 @@ class Kafka {
   void unSubcribe() {
     _listeners = _listeners.where((k) => k.uuid != _uuid).toList();
   }
-}
-
-class KafkaSubscriber {
-  final String uuid;
-  final String topic;
-  final OnTopicCallBack onTopic;
-
-  const KafkaSubscriber({
-    required this.uuid,
-    required this.topic,
-    required this.onTopic,
-  });
 }
