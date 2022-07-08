@@ -6,7 +6,7 @@ typedef OnTopicCallBack = void Function(Map<String, dynamic> data);
 
 class Kafka {
   static List<KafkaSubscriber> _listeners = [];
-  final String uuid = const Uuid().v1();
+  final uuid = const Uuid().v1();
 
   /// Emit [topic] to all listeners
   void emit(String topic, Map<String, dynamic> data) {
