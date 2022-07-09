@@ -9,12 +9,12 @@ part 'package:flutter_kafka/models/topic.dart';
 typedef OnTopicCallBack = void Function(TopicData topic);
 
 class Kafka {
-  static List<KafkaSubscriber> _listeners = [];
+  static final List<KafkaSubscriber> _listeners = [];
   final _uuid = const Uuid().v1();
 
   /// Emit [topic] to all listeners
   void emit(String topic, [TopicData topicData = const TopicData()]) {
-    _listeners.where((k) => k.topic == topic).forEach((k) {
+    _listeners.where((k) => k.topic == topic && k.active).forEach((k) {
       k.onTopic(topicData);
     });
   }
@@ -32,6 +32,27 @@ class Kafka {
 
   /// Unsubscribe from topic [topic] listener
   void unSubcribe() {
-    _listeners = _listeners.where((k) => k.uuid != _uuid).toList();
+    if (index == -1) return;
+
+    _listeners[index] = _listeners[index].copyWith(
+      active: false,
+    );
   }
+
+  /// ReSubscribe from topic [topic] listener
+  void reSubcribe() {
+    if (index == -1) return;
+
+    _listeners[index] = _listeners[index].copyWith(
+      active: true,
+    );
+  }
+
+  bool get listening {
+    if (index == -1) return false;
+
+    return _listeners[index].active;
+  }
+
+  int get index => _listeners.indexWhere((k) => k.uuid == _uuid);
 }
