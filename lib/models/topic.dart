@@ -14,4 +14,5 @@ enum KafkaAction {
   created,
   edited,
   deleted,
+  changed,
 }

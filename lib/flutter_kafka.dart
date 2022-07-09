@@ -14,38 +14,42 @@ class Kafka {
 
   /// Emit [topic] to all listeners
   void emit(String topic, [TopicData topicData = const TopicData()]) {
-    _listeners.where((k) => k.topic == topic && k.active).forEach((k) {
-      k.onTopic(topicData);
-    });
+    try {
+      _listeners.where((k) => k.topic == topic && k.active).forEach((k) {
+        k.onTopic(topicData);
+      });
+    } catch (_) {}
   }
 
   /// Listen come [topic]
   void on(String topic, OnTopicCallBack onTopic) {
-    _listeners.add(
-      KafkaSubscriber(
-        uuid: _uuid,
-        topic: topic,
-        onTopic: onTopic,
-      ),
-    );
+    try {
+      _listeners.add(
+        KafkaSubscriber(
+          uuid: _uuid,
+          topic: topic,
+          onTopic: onTopic,
+        ),
+      );
+    } catch (_) {}
   }
 
   /// Unsubscribe from topic [topic] listener
   void unSubcribe() {
     if (index == -1) return;
 
-    _listeners[index] = _listeners[index].copyWith(
-      active: false,
-    );
+    try {
+      _listeners[index] = _listeners[index].copyWith(active: false);
+    } catch (_) {}
   }
 
   /// ReSubscribe from topic [topic] listener
   void reSubcribe() {
     if (index == -1) return;
 
-    _listeners[index] = _listeners[index].copyWith(
-      active: true,
-    );
+    try {
+      _listeners[index] = _listeners[index].copyWith(active: true);
+    } catch (_) {}
   }
 
   bool get listening {

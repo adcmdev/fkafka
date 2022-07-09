@@ -17,7 +17,7 @@ abstract class KafkaProducer {
     kafka.emit(
       topic,
       TopicData(
-        action: KafkaAction.created,
+        action: KafkaAction.edited,
         data: data,
       ),
     );
@@ -27,7 +27,17 @@ abstract class KafkaProducer {
     kafka.emit(
       topic,
       TopicData(
-        action: KafkaAction.created,
+        action: KafkaAction.deleted,
+        data: data,
+      ),
+    );
+  }
+
+  void changed(String topic, Map<String, dynamic> data) {
+    kafka.emit(
+      topic,
+      TopicData(
+        action: KafkaAction.changed,
         data: data,
       ),
     );
