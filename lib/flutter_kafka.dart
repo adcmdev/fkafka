@@ -16,7 +16,11 @@ class Kafka {
   void emit(String topic, [TopicData topicData = const TopicData()]) {
     try {
       _listeners.where((k) => k.topic == topic && k.active).forEach((k) {
-        k.onTopic(topicData);
+        final data = topicData.copyWith(
+          topic: topic,
+        );
+
+        k.onTopic(data);
       });
     } catch (_) {}
   }
