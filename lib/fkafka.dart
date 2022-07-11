@@ -38,8 +38,8 @@ class Fkafka {
     } catch (_) {}
   }
 
-  /// Unsubscribe from topic [topic] listener
-  void unSubcribe() {
+  /// Close connection from topic [topic] listener
+  void close() {
     if (index == -1) return;
 
     try {
@@ -47,8 +47,8 @@ class Fkafka {
     } catch (_) {}
   }
 
-  /// ReSubscribe from topic [topic] listener
-  void reSubcribe() {
+  /// ReOpen active connection, if connection is already closed from topic [topic] listener
+  void reOpen() {
     if (index == -1) return;
 
     try {
