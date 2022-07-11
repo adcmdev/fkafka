@@ -1,25 +1,25 @@
 part of 'package:fkafka/fkafka.dart';
 
-class KafkaSubscriber {
+class FkafkaSubscriber {
   final String uuid;
   final String topic;
   final OnTopicCallBack onTopic;
   final bool active;
 
-  const KafkaSubscriber({
+  const FkafkaSubscriber({
     required this.uuid,
     required this.topic,
     required this.onTopic,
     this.active = true,
   });
 
-  KafkaSubscriber copyWith({
+  FkafkaSubscriber copyWith({
     String? uuid,
     String? topic,
     OnTopicCallBack? onTopic,
     bool? active,
   }) {
-    return KafkaSubscriber(
+    return FkafkaSubscriber(
       uuid: uuid ?? this.uuid,
       topic: topic ?? this.topic,
       onTopic: onTopic ?? this.onTopic,

@@ -9,7 +9,7 @@ part 'package:fkafka/models/topic.dart';
 typedef OnTopicCallBack = void Function(TopicData topic);
 
 class Fkafka {
-  static final List<KafkaSubscriber> _listeners = [];
+  static final List<FkafkaSubscriber> _listeners = [];
   final _uuid = const Uuid().v1();
 
   /// Emit [topic] to all listeners
@@ -29,7 +29,7 @@ class Fkafka {
   void on(String topic, OnTopicCallBack onTopic) {
     try {
       _listeners.add(
-        KafkaSubscriber(
+        FkafkaSubscriber(
           uuid: _uuid,
           topic: topic,
           onTopic: onTopic,

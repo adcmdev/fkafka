@@ -6,7 +6,8 @@ Can connect to any topic in anywhere and get data without direct direction.
 
 - Emit topic and send data.
 - Listen topic and recieve data.
-- Cancel topic listen.
+- Close topic listen.
+- ReOpen connection when is already closed.
 
 ## Getting started
 
@@ -34,8 +35,31 @@ import 'package:fkafka/fkafka.dart';
 final kafka = Fkafka();
 ```
 
-## Additional information
+Then, if you want to emit something...
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+kafka.emit(
+  topic,
+  TopicData(
+    action: FkafkaAction.created // created, edited, deleted, changed,
+    data: {
+      'foo': 'bar'
+    },
+  ),
+);
+
+```
+
+To listen emited topic...
+
+```dart
+final kafka = Fkafka();
+
+kafka.on(
+  TulTopics.cart,
+  (TopicData topic) {
+    print(topic);
+  },
+);
+
+```

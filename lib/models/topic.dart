@@ -2,18 +2,18 @@ part of 'package:fkafka/fkafka.dart';
 
 class TopicData {
   final String topic;
-  final KafkaAction action;
+  final FkafkaAction action;
   final Map<String, dynamic> data;
 
   const TopicData({
     this.topic = '',
-    this.action = KafkaAction.created,
+    this.action = FkafkaAction.created,
     this.data = const {},
   });
 
   TopicData copyWith({
     String? topic,
-    KafkaAction? action,
+    FkafkaAction? action,
     Map<String, dynamic>? data,
   }) {
     return TopicData(
@@ -24,7 +24,7 @@ class TopicData {
   }
 }
 
-enum KafkaAction {
+enum FkafkaAction {
   created,
   edited,
   deleted,

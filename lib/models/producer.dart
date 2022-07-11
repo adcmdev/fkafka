@@ -7,7 +7,7 @@ abstract class FkafkaProducer {
     kafka.emit(
       topic,
       TopicData(
-        action: KafkaAction.created,
+        action: FkafkaAction.created,
         data: data,
       ),
     );
@@ -17,7 +17,7 @@ abstract class FkafkaProducer {
     kafka.emit(
       topic,
       TopicData(
-        action: KafkaAction.edited,
+        action: FkafkaAction.edited,
         data: data,
       ),
     );
@@ -27,7 +27,7 @@ abstract class FkafkaProducer {
     kafka.emit(
       topic,
       TopicData(
-        action: KafkaAction.deleted,
+        action: FkafkaAction.deleted,
         data: data,
       ),
     );
@@ -37,7 +37,7 @@ abstract class FkafkaProducer {
     kafka.emit(
       topic,
       TopicData(
-        action: KafkaAction.changed,
+        action: FkafkaAction.changed,
         data: data,
       ),
     );
