@@ -35,7 +35,7 @@ import 'package:fkafka/fkafka.dart';
 final kafka = Fkafka();
 ```
 
-Then, if you want to emit something...
+## Emit
 
 ```dart
 kafka.emit(
@@ -47,10 +47,11 @@ kafka.emit(
     },
   ),
 );
-
 ```
 
-To listen emited topic...
+## Listen
+
+Is necessary create a new instance to listen topics, try not use the same instance in more topics because is you try to close connection it will close in all topics listen in the same instance.
 
 ```dart
 final kafka = Fkafka();
@@ -61,5 +62,13 @@ kafka.on(
     print(topic);
   },
 );
+```
+
+## Close connection
+
+This method allows you to close topic listener.
 
 ```
+kafka.close();
+```
+
