@@ -1,6 +1,8 @@
 name: fkafka
 description: A new Flutter package project.
 version: 0.1.0
+publish_to: pub.dev
+homepage: https://github.com/AndresC17/fkafka
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
