@@ -1,7 +1,7 @@
-part of 'package:flutter_kafka/flutter_kafka.dart';
+part of 'package:fkafka/fkafka.dart';
 
-abstract class KafkaProducer {
-  final kafka = Kafka();
+abstract class FkafkaProducer {
+  final kafka = Fkafka();
 
   void created(String topic, Map<String, dynamic> data) {
     kafka.emit(

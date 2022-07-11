@@ -1,35 +1,37 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Have you ever wanted to send a message to another part of the app but don't want to create a direct connection?
+This package allows you to send and listen topic anywhere.
+Can connect to any topic in anywhere and get data without direct direction.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Emit topic and send data.
+- Listen topic and recieve data.
+- Cancel topic listen.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### Instructions
+
+- Open a command line and cd to your projects root folder
+- In your pubspec, add an entry for fkafka to your dependencies (example below)
+- flutter pub get
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### Pubspec
+There are 2 options. Directly from git, or from pub.dartlang.org
+
+pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
+
+```yaml
+dependencies:
+  fkafka: 0.1.0
+```
 
 ```dart
-const like = 'sample';
+import 'package:fkafka/fkafka.dart';
+
+final kafka = Fkafka();
 ```
 
 ## Additional information

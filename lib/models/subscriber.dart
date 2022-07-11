@@ -1,4 +1,4 @@
-part of 'package:flutter_kafka/flutter_kafka.dart';
+part of 'package:fkafka/fkafka.dart';
 
 class KafkaSubscriber {
   final String uuid;

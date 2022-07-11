@@ -1,14 +1,14 @@
-library flutter_kafka;
+library fkafka;
 
 import 'package:uuid/uuid.dart';
 
-part 'package:flutter_kafka/models/subscriber.dart';
-part 'package:flutter_kafka/models/producer.dart';
-part 'package:flutter_kafka/models/topic.dart';
+part 'package:fkafka/models/subscriber.dart';
+part 'package:fkafka/models/producer.dart';
+part 'package:fkafka/models/topic.dart';
 
 typedef OnTopicCallBack = void Function(TopicData topic);
 
-class Kafka {
+class Fkafka {
   static final List<KafkaSubscriber> _listeners = [];
   final _uuid = const Uuid().v1();
 
