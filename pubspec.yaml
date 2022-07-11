@@ -1,7 +1,6 @@
 name: fkafka
-description: A new Flutter package project.
+description: Kafka equivalent in flutter
 version: 0.1.0
-publish_to: https://pub.dev/
 homepage: https://github.com/AndresC17/fkafka
 
 environment:
