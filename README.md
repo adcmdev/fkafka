@@ -26,7 +26,7 @@ pub.dartlang.org: (you can use 'any' instead of a version if you just want the l
 
 ```yaml
 dependencies:
-  fkafka: 0.1.0
+  fkafka: 1.0.0
 ```
 
 ```dart
@@ -51,12 +51,12 @@ kafka.emit(
 
 ## Listen
 
-Is necessary create a new instance to listen topics, try not use the same instance in more topics because is you try to close connection it will close in all topics listen in the same instance.
+To listen an specific topic you need to create a `Fkafka` instance.
 
 ```dart
 final kafka = Fkafka();
 
-kafka.on(
+kafka.listen(
   TulTopics.cart,
   (TopicData topic) {
     print(topic);
@@ -64,11 +64,17 @@ kafka.on(
 );
 ```
 
-## Close connection
+Don't forget to close the instance if it's not going to be used anymore. This will cancel all the subscriptions added to that instance.
 
-This method allows you to close topic listener.
+```dart
+kafka.closeInstance();
+```
+
+## Close Fkafka
+
+This method should be called if Fkafka won't be used anymore in the code, to avoid having open streams or memory leaks.
 
 ```
-kafka.close();
+Fkafka.closeAll();
 ```
 
