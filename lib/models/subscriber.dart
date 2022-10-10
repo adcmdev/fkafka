@@ -1,29 +1,32 @@
 part of 'package:fkafka/fkafka.dart';
 
-class FkafkaSubscriber {
-  final String uuid;
-  final String topic;
-  final OnTopicCallBack onTopic;
-  final bool active;
-
+class FkafkaSubscriber extends Equatable {
   const FkafkaSubscriber({
-    required this.uuid,
-    required this.topic,
+    required this.isActive,
     required this.onTopic,
-    this.active = true,
+    required this.subscription,
   });
 
+  final bool isActive;
+  final OnTopicCallBack onTopic;
+  final StreamSubscription<FkafkaEvent> subscription;
+
   FkafkaSubscriber copyWith({
-    String? uuid,
-    String? topic,
+    bool? isActive,
     OnTopicCallBack? onTopic,
-    bool? active,
+    StreamSubscription<FkafkaEvent>? subscription,
   }) {
     return FkafkaSubscriber(
-      uuid: uuid ?? this.uuid,
-      topic: topic ?? this.topic,
+      isActive: isActive ?? this.isActive,
       onTopic: onTopic ?? this.onTopic,
-      active: active ?? this.active,
+      subscription: subscription ?? this.subscription,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        isActive,
+        onTopic,
+        subscription,
+      ];
 }

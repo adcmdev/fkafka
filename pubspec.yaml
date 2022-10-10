@@ -1,6 +1,6 @@
 name: fkafka
 description: Kafka equivalent in flutter
-version: 0.1.0
+version: 1.0.0
 homepage: https://github.com/AndresC17/fkafka
 
 environment:
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  uuid: ^3.0.6
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
