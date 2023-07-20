@@ -11,23 +11,22 @@ Can connect to any topic in anywhere and get data without direct direction.
 
 ## Getting started
 
-### Instructions
+```console
+# Flutter projects
+flutter pub get fkafka
 
-- Open a command line and cd to your projects root folder
-- In your pubspec, add an entry for fkafka to your dependencies (example below)
-- flutter pub get
+# Dart projects
+dart pub get fkafka
+```
 
-## Usage
-
-### Pubspec
-There are 2 options. Directly from git, or from pub.dartlang.org
-
-pub.dartlang.org: (you can use 'any' instead of a version if you just want the latest always)
+or add the package directly in the `pubspec.yaml`
 
 ```yaml
 dependencies:
-  fkafka: 1.0.0
+  fkafka: ^1.0.0
 ```
+
+## Usage
 
 ```dart
 import 'package:fkafka/fkafka.dart';
@@ -41,24 +40,31 @@ final kafka = Fkafka();
 kafka.emit(
   topic,
   TopicData(
-    action: FkafkaAction.created // created, edited, deleted, changed,
+    action: FkafkaAction.created,
     data: {
       'foo': 'bar'
     },
   ),
 );
+
+FkafkaAction {
+  created,
+  edited,
+  deleted,
+  changed,
+}
 ```
 
 ## Listen
 
-To listen an specific topic you need to create a `Fkafka` instance.
+To listen a specific topic you need to create a `Fkafka` instance.
 
 ```dart
 final kafka = Fkafka();
 
 kafka.listen(
-  TulTopics.cart,
-  (TopicData topic) {
+  topic: TulTopics.cart,
+  onTopic: (TopicData topic) {
     print(topic);
   },
 );
@@ -74,7 +80,7 @@ kafka.closeInstance();
 
 This method should be called if Fkafka won't be used anymore in the code, to avoid having open streams or memory leaks.
 
-```
+```dart
 Fkafka.closeAll();
 ```
 
