@@ -8,7 +8,7 @@ part 'package:fkafka/models/event.dart';
 part 'package:fkafka/models/producer.dart';
 part 'package:fkafka/models/subscriber.dart';
 
-typedef OnTopicCallBack = void Function(Map<String, dynamic> topic);
+typedef OnTopicCallBack<T> = void Function(T topic);
 
 class Fkafka {
   static final Map<String, StreamController<FkafkaEvent>> _controllers = {};
@@ -40,9 +40,9 @@ class Fkafka {
   }
 
   /// Add a subscription to the [topic]
-  void listen(
+  void listen<T>(
     String topic, {
-    required OnTopicCallBack onTopic,
+    required OnTopicCallBack<T> onTopic,
   }) {
     _controllers.putIfAbsent(
       topic,
@@ -60,10 +60,10 @@ class Fkafka {
     );
 
     _subscribers[topic]!.add(
-      FkafkaSubscriber(
+      FkafkaSubscriber<T>(
         isActive: true,
         onTopic: onTopic,
-        subscription: subscription,
+        subscription: subscription as StreamSubscription<FkafkaEvent<T>>,
       ),
     );
   }

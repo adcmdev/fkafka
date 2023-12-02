@@ -2,7 +2,7 @@
 
 Each entry in this document is intended to be concise and focused on what is relevant to end-users.
 
-## [1.2.0] - 2023-12-01
+## [1.2.1] - 2023-12-01
 
 ### Added
 - Support for custom types in events, allowing for greater flexibility and customization.

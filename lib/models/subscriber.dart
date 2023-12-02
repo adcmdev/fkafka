@@ -8,15 +8,15 @@ class FkafkaSubscriber<T> extends Equatable {
   });
 
   final bool isActive;
-  final OnTopicCallBack onTopic;
+  final OnTopicCallBack<T> onTopic;
   final StreamSubscription<FkafkaEvent<T>> subscription;
 
-  FkafkaSubscriber copyWith({
+  FkafkaSubscriber<T> copyWith({
     bool? isActive,
-    OnTopicCallBack? onTopic,
+    OnTopicCallBack<T>? onTopic,
     StreamSubscription<FkafkaEvent<T>>? subscription,
   }) {
-    return FkafkaSubscriber(
+    return FkafkaSubscriber<T>(
       isActive: isActive ?? this.isActive,
       onTopic: onTopic ?? this.onTopic,
       subscription: subscription ?? this.subscription,
