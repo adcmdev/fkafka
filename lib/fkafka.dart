@@ -63,7 +63,7 @@ class Fkafka {
       FkafkaSubscriber<T>(
         isActive: true,
         onTopic: onTopic,
-        subscription: subscription as StreamSubscription<FkafkaEvent<T>>,
+        subscription: subscription,
       ),
     );
   }
