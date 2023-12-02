@@ -1,25 +1,29 @@
-Have you ever wanted to send a message to another part of the app but don't want to create a direct connection?
-This package allows you to send and listen topic anywhere.
-Can connect to any topic in anywhere and get data without direct direction.
+# Fkafka Dart Package
+
+The `fkafka` package offers an elegant solution for sending messages across different parts of your Dart or Flutter application without establishing direct connections. It simplifies event-driven programming by allowing you to emit and listen to topics anywhere in your app.
 
 ## Features
 
-- Emit topic and send data.
-- Listen topic and recieve data.
-- Close topic listen.
-- ReOpen connection when is already closed.
+- **Emit Topics**: Easily broadcast data across different parts of your app.
+- **Listen to Topics**: Set up listeners for specific topics and react to the data received.
+- **Control Listeners**: Ability to pause, resume, or close topic listeners.
+- **Reconnect Capability**: Automatically re-establish connections when they are closed.
 
-## Getting started
+## Getting Started
 
+To get started with `fkafka`, add it to your project's dependencies:
+
+### For Flutter Projects
 ```console
-# Flutter projects
-flutter pub get fkafka
-
-# Dart projects
-dart pub get fkafka
+flutter pub add fkafka
 ```
 
-or add the package directly in the `pubspec.yaml`
+### For Dart Projects
+```console
+dart pub add fkafka
+```
+
+Or manually add it to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
@@ -28,50 +32,68 @@ dependencies:
 
 ## Usage
 
+Import the package and create an instance of `Fkafka`:
+
 ```dart
 import 'package:fkafka/fkafka.dart';
 
 final kafka = Fkafka();
 ```
 
-## Emit
+### Emitting Data
+
+In this example, we're emitting a list of products:
 
 ```dart
-kafka.emit(
-  'products.loaded',
-  {
-    'foo': 'bar'
-  },
-);
+// Assuming Product is a defined class
+final List<Product> products = [
+  Product(name: 'phone', type: 'iphone', price: 1500.0),
+];
 
+// Emitting a list of products on the 'products.loaded' topic
+kafka.emit<List<Product>>('products.loaded', products);
 ```
 
-## Listen
+### Listening to Topics
 
-To listen a specific topic you need to create a `Fkafka` instance.
+Set up a listener for the 'products.loaded' topic:
 
 ```dart
 final kafka = Fkafka();
 
-kafka.listen(
+// Listening for the list of products
+kafka.listen<List<Product>>(
   'products.loaded',
-  onTopic: (Map<String, dynamic> topic) {
-    print(topic);
+  onTopic: (List<Product> products) {
+    // Handle the received list of products
+    print(products);
   },
 );
 ```
 
-Don't forget to close the instance if it's not going to be used anymore. This will cancel all the subscriptions added to that instance.
+Remember to close the instance when it's no longer needed:
 
 ```dart
 kafka.closeInstance();
 ```
 
-## Close Fkafka
+### Managing Fkafka Instance
 
-This method should be called if Fkafka won't be used anymore in the code, to avoid having open streams or memory leaks.
+To close all Fkafka instances and release resources:
 
 ```dart
 Fkafka.closeAll();
 ```
 
+## Advanced Usage
+
+- **Pausing and Resuming Subscriptions**: Control your topic listeners by pausing and resuming them as needed.
+- **Check Active Listeners**: Verify if a topic has active listeners in a particular instance.
+
+## Contributing
+
+Contributions to the `fkafka` package are welcome. Please read our contributing guidelines for more information.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
