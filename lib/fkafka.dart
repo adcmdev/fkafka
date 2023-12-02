@@ -7,9 +7,8 @@ import 'package:equatable/equatable.dart';
 part 'package:fkafka/models/event.dart';
 part 'package:fkafka/models/producer.dart';
 part 'package:fkafka/models/subscriber.dart';
-part 'package:fkafka/models/topic.dart';
 
-typedef OnTopicCallBack = void Function(TopicData topic);
+typedef OnTopicCallBack = void Function(Map<String, dynamic> topic);
 
 class Fkafka {
   static final Map<String, StreamController<FkafkaEvent>> _controllers = {};
@@ -26,26 +25,24 @@ class Fkafka {
   }
 
   /// Emit an event to all subscribers of [topic].
-  void emit(String topic, [TopicData topicData = const TopicData()]) {
+  void emit<T>(String topic, T data) {
     _controllers.putIfAbsent(
       topic,
       () => StreamController.broadcast(),
     );
 
     _controllers[topic]!.add(
-      FkafkaEvent(
+      FkafkaEvent<T>(
         topic: topic,
-        topicData: topicData.copyWith(
-          topic: topic,
-        ),
+        data: data,
       ),
     );
   }
 
   /// Add a subscription to the [topic]
-  void listen({
+  void listen(
+    String topic, {
     required OnTopicCallBack onTopic,
-    required String topic,
   }) {
     _controllers.putIfAbsent(
       topic,
@@ -58,11 +55,10 @@ class Fkafka {
 
     final subscription = _controllers[topic]!.stream.listen(
       (event) {
-        onTopic(
-          event.topicData,
-        );
+        onTopic(event.data);
       },
     );
+
     _subscribers[topic]!.add(
       FkafkaSubscriber(
         isActive: true,
@@ -112,9 +108,7 @@ class Fkafka {
 
       final subscription = _controllers[topic]!.stream.listen(
         (event) {
-          subscriber.onTopic(
-            event.topicData,
-          );
+          subscriber.onTopic(event.data);
         },
       );
 

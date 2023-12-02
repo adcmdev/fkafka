@@ -24,9 +24,11 @@ class FkafkaSubscriber extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        isActive,
-        onTopic,
-        subscription,
-      ];
+  List<Object?> get props {
+    return [
+      isActive,
+      onTopic,
+      subscription,
+    ];
+  }
 }

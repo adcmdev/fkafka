@@ -23,7 +23,7 @@ or add the package directly in the `pubspec.yaml`
 
 ```yaml
 dependencies:
-  fkafka: ^1.0.0
+  fkafka: ^2.0.0
 ```
 
 ## Usage
@@ -38,21 +38,12 @@ final kafka = Fkafka();
 
 ```dart
 kafka.emit(
-  topic,
-  TopicData(
-    action: FkafkaAction.created,
-    data: {
-      'foo': 'bar'
-    },
-  ),
+  'products.loaded',
+  {
+    'foo': 'bar'
+  },
 );
 
-FkafkaAction {
-  created,
-  edited,
-  deleted,
-  changed,
-}
 ```
 
 ## Listen
@@ -63,8 +54,8 @@ To listen a specific topic you need to create a `Fkafka` instance.
 final kafka = Fkafka();
 
 kafka.listen(
-  topic: TulTopics.cart,
-  onTopic: (TopicData topic) {
+  'products.loaded',
+  onTopic: (Map<String, dynamic> topic) {
     print(topic);
   },
 );

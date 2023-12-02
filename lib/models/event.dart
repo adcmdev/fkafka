@@ -1,17 +1,19 @@
 part of 'package:fkafka/fkafka.dart';
 
-class FkafkaEvent extends Equatable {
+class FkafkaEvent<T> extends Equatable {
   const FkafkaEvent({
     required this.topic,
-    required this.topicData,
+    required this.data,
   });
 
   final String topic;
-  final TopicData topicData;
+  final T data;
 
   @override
-  List<Object?> get props => [
-        topic,
-        topicData,
-      ];
+  List<Object?> get props {
+    return [
+      topic,
+      data,
+    ];
+  }
 }
