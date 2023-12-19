@@ -51,7 +51,7 @@ final List<Product> products = [
 ];
 
 // Emitting a list of products on the 'products.loaded' topic
-kafka.emit<List<Product>>('products.loaded', products);
+kafka.emit('products.loaded', products);
 ```
 
 ### Listening to Topics
