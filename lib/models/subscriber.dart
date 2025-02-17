@@ -1,6 +1,6 @@
 part of 'package:fkafka/fkafka.dart';
 
-class FkafkaSubscriber extends Equatable {
+class FkafkaSubscriber<T> extends Equatable {
   const FkafkaSubscriber({
     required this.isActive,
     required this.onTopic,
@@ -8,15 +8,15 @@ class FkafkaSubscriber extends Equatable {
   });
 
   final bool isActive;
-  final OnTopicCallBack onTopic;
+  final OnTopicCallBack<T> onTopic;
   final StreamSubscription<FkafkaEvent> subscription;
 
-  FkafkaSubscriber copyWith({
+  FkafkaSubscriber<T> copyWith({
     bool? isActive,
-    OnTopicCallBack? onTopic,
-    StreamSubscription<FkafkaEvent>? subscription,
+    OnTopicCallBack<T>? onTopic,
+    StreamSubscription<FkafkaEvent<T>>? subscription,
   }) {
-    return FkafkaSubscriber(
+    return FkafkaSubscriber<T>(
       isActive: isActive ?? this.isActive,
       onTopic: onTopic ?? this.onTopic,
       subscription: subscription ?? this.subscription,
@@ -24,9 +24,11 @@ class FkafkaSubscriber extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        isActive,
-        onTopic,
-        subscription,
-      ];
+  List<Object?> get props {
+    return [
+      isActive,
+      onTopic,
+      subscription,
+    ];
+  }
 }

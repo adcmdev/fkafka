@@ -13,32 +13,31 @@ void main() async {
 
       final fkafka1 = Fkafka();
       fkafka1.listen(
+        testTopic,
         onTopic: (_) {
           i++;
         },
-        topic: testTopic,
       );
 
       final fkafka2 = Fkafka();
       fkafka2.listen(
+        testTopic,
         onTopic: (_) {
           throw Exception();
         },
-        topic: testTopic,
       );
 
       final fkafka3 = Fkafka();
       fkafka3.listen(
+        testTopic,
         onTopic: (_) {
           i++;
         },
-        topic: testTopic,
       );
 
       final fkafkaEmitter = Fkafka();
-      fkafkaEmitter.emit(
-        testTopic,
-      );
+      fkafkaEmitter.emit(testTopic, "");
+
       await Future.delayed(const Duration(seconds: 2));
       print(i == 2);
 
@@ -54,9 +53,8 @@ void main() async {
       );
       print(isListening == false);
 
-      fkafkaEmitter.emit(
-        testTopic,
-      );
+      fkafkaEmitter.emit(testTopic, "");
+
       await Future.delayed(const Duration(seconds: 2));
       print(i == 3);
 

@@ -7,9 +7,8 @@ import 'package:equatable/equatable.dart';
 part 'package:fkafka/models/event.dart';
 part 'package:fkafka/models/producer.dart';
 part 'package:fkafka/models/subscriber.dart';
-part 'package:fkafka/models/topic.dart';
 
-typedef OnTopicCallBack = void Function(TopicData topic);
+typedef OnTopicCallBack<T> = void Function(T topic);
 
 class Fkafka {
   static final Map<String, StreamController<FkafkaEvent>> _controllers = {};
@@ -26,26 +25,24 @@ class Fkafka {
   }
 
   /// Emit an event to all subscribers of [topic].
-  void emit(String topic, [TopicData topicData = const TopicData()]) {
+  void emit<T>(String topic, T data) {
     _controllers.putIfAbsent(
       topic,
       () => StreamController.broadcast(),
     );
 
     _controllers[topic]!.add(
-      FkafkaEvent(
+      FkafkaEvent<T>(
         topic: topic,
-        topicData: topicData.copyWith(
-          topic: topic,
-        ),
+        data: data,
       ),
     );
   }
 
   /// Add a subscription to the [topic]
-  void listen({
-    required OnTopicCallBack onTopic,
-    required String topic,
+  void listen<T>(
+    String topic, {
+    required OnTopicCallBack<T> onTopic,
   }) {
     _controllers.putIfAbsent(
       topic,
@@ -58,13 +55,12 @@ class Fkafka {
 
     final subscription = _controllers[topic]!.stream.listen(
       (event) {
-        onTopic(
-          event.topicData,
-        );
+        onTopic(event.data);
       },
     );
+
     _subscribers[topic]!.add(
-      FkafkaSubscriber(
+      FkafkaSubscriber<T>(
         isActive: true,
         onTopic: onTopic,
         subscription: subscription,
@@ -112,15 +108,41 @@ class Fkafka {
 
       final subscription = _controllers[topic]!.stream.listen(
         (event) {
-          subscriber.onTopic(
-            event.topicData,
-          );
+          subscriber.onTopic(event.data);
         },
       );
 
       subscribers[i] = subscriber.copyWith(
         isActive: true,
         subscription: subscription,
+      );
+    }
+  }
+
+  /// Add a subscription to the [topics]
+  /// [topics] should be a list of topics
+  /// [onTopic] should be a callback that will be called whenever a
+  /// new event is emitted from the [topics]
+  void listenMultiple<T>({
+    required List<String> topics,
+    required OnTopicCallBack onTopic,
+  }) {
+    for (final topic in topics) {
+      listen<T>(
+        topic,
+        onTopic: onTopic,
+      );
+    }
+  }
+
+  /// Pause all the subscriptions from this instance of Fkafka to
+  /// the [topics]
+  void pauseListeningToMultiple({
+    required List<String> topics,
+  }) {
+    for (final topic in topics) {
+      pauseListeningTo(
+        topic: topic,
       );
     }
   }
