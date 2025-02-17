@@ -77,6 +77,30 @@ Remember to close the instance when it's no longer needed:
 kafka.closeInstance();
 ```
 
+### Listening to Multiple Topics
+
+You can listen to multiple topics at once:
+
+```dart
+kafka.listenMultiple<T>(
+  topics: ['products.loaded', 'orders.placed'],
+  onTopic: (T data) {
+    // Handle the received data
+    print(data);
+  },
+);
+```
+
+### Pausing multiple Listeners
+
+You can pause all the listeners for multiple topics at once:
+
+```dart
+kafka.pauseListeningToMultiple(
+  topics: ['products.loaded', 'orders.placed'],
+);
+```
+
 ### Managing Fkafka Instance
 
 To close all Fkafka instances and release resources:

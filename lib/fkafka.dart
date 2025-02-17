@@ -119,6 +119,34 @@ class Fkafka {
     }
   }
 
+  /// Add a subscription to the [topics]
+  /// [topics] should be a list of topics
+  /// [onTopic] should be a callback that will be called whenever a
+  /// new event is emitted from the [topics]
+  void listenMultiple<T>({
+    required List<String> topics,
+    required OnTopicCallBack onTopic,
+  }) {
+    for (final topic in topics) {
+      listen<T>(
+        topic,
+        onTopic: onTopic,
+      );
+    }
+  }
+
+  /// Pause all the subscriptions from this instance of Fkafka to
+  /// the [topics]
+  void pauseListeningToMultiple({
+    required List<String> topics,
+  }) {
+    for (final topic in topics) {
+      pauseListeningTo(
+        topic: topic,
+      );
+    }
+  }
+
   /// Check if there is at least one active subscription to the
   /// [topic] in this instance of Fkafka.
   bool isListeningTo({
