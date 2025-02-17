@@ -125,7 +125,7 @@ class Fkafka {
   /// new event is emitted from the [topics]
   void listenMultiple<T>({
     required List<String> topics,
-    required OnTopicCallBack onTopic,
+    required OnTopicCallBack<T> onTopic,
   }) {
     for (final topic in topics) {
       listen<T>(

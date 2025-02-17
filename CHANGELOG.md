@@ -2,6 +2,9 @@
 
 Each entry in this document is intended to be concise and focused on what is relevant to end-users.
 
+## [2.0.3] - 2024-02-17
+- Fix for the `listenMultiple` method.
+
 ## [2.0.2] - 2024-02-17
 - Added support for multiple topics in the `listenMultiple` method.
 - Added support for pausing all subscriptions to multiple topics in the `pauseListeningToMultiple` method.
